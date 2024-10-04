@@ -1,0 +1,78 @@
+.cell{
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    float: right;
+    font-size: 2.5em;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+}
+
+.dialog{
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: rgb(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    scale: 0;
+    transition: scale 1s;
+}
+
+.content{
+    text-align: center;
+    background: gray;
+    color: white;
+    padding: 25px;
+    border-radius: 25px;
+}
+
+p{
+    font-size: 1.5em;
+}
+
+.heading > h1{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.current{
+    text-align: center;
+}
+
+.btn{
+    border: 2px dashed black;
+    margin: 25px;
+    font-size: 2em;
+    border-radius: 25px;
+    background: #00F532;
+    font-weight: bold;
+    padding: 5px;
+    transition: background 0.5s ease, color .5s ease;
+}
+
+.btn:hover{
+    border: 2px dashed black;
+    margin: 25px;
+    font-size: 2em;
+    border-radius: 25px;
+    background: #8F8F8F;
+    font-weight: bold;
+    padding: 5px;
+    color: white;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: center;
+}

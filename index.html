@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTocToe</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="row heading">
+            <h1>TicTacToe</h1>
+
+            <h2>
+                Scores.
+            </h2>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p id="X">
+                        X:0
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <p id="O">
+                        O:0
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <p id="draw">
+                        Draw: 0
+                    </p>
+                </li>
+            </ul>
+
+            <p class="current">
+                Its X turn
+            </p>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="cell" id="top0" value="00" onclick="btnClicked(id)">
+            </div>
+            <div class="cell" id="top1" value="01" onclick="btnClicked(id)">
+            </div>
+            <div class="cell" id="top2" value="02" onclick="btnClicked(id)">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cell" id="mid0" value="10" onclick="btnClicked(id)"></div>
+            <div class="cell" id="mid1" value="11" onclick="btnClicked(id)"></div>
+            <div class="cell" id="mid2" value="12" onclick="btnClicked(id)"></div>
+        </div>
+
+        <div class="row">
+            <div class="cell" id="bottom0" value="20" onclick="btnClicked(id)"></div>
+            <div class="cell" id="bottom1" value="21" onclick="btnClicked(id)"></div>
+            <div class="cell" id="bottom2" value="22" onclick="btnClicked(id)"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 btn-container">
+                <button class="btn" onclick="vsComputer()">
+                    Computer
+                </button>
+                <button class="btn" onclick="vsPlayer()">
+                    Player
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--Dialog-->
+    <div class="container dialog">
+        <div class="row">
+            <div class="content col-md-12 col-lg-12">
+                <h1 id="result">The winner is</h1>
+                <p>
+                    Would you like to play again?
+                </p>
+                <button onclick="btnNo()">No</button>
+                <Button onclick="btnYes()">Yes</Button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/bootstrap.bundle.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/script.js"></script>
+
+</body>
+</html>
