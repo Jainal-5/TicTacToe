@@ -27,6 +27,12 @@ var COMPUTER = 0
 var playerVSPlayer = 1
 var oponent = COMPUTER
 
+//difficulty
+var EASY = 0
+var NORMAL = 1
+var HARD = 2
+var difficulty = EASY
+
 //initialize an Empty table
 function initializeEmpTable() {
     // body...
@@ -153,8 +159,6 @@ function btnNo() {
 
 //btnYes
 function btnYes() {
-    var dialog = document.getElementsByClassName("dialog")[0]
-
     closeDialog()
 
     initializeEmpTable()
@@ -269,6 +273,7 @@ function btnClicked(id) {
                 alert(`Something is wrong with the oponent\noponent: ${oponent}`)
             }
         } else {
+            //this shows the dialog again.
             processGame()
         }
     } else {
@@ -281,7 +286,11 @@ function btnClicked(id) {
 }
 
 function vsComputer() {
-    alert("You are now Playing against Computer.")
+    //if the oponent is already a computer
+    //let the user select difficulty
+    if(oponent === COMPUTER){
+        showDifficultyDialog()
+    }
 
     initializeEmpTable()
 
@@ -309,57 +318,38 @@ function isCellEmpty(x, y) {
 
 //computerMoves
 function computerMoves() {
+    var index = null
     var x = null
     var y = null
 
-    //check for player winning move then
-    //block it
-    for (var i = 0; i < 3; i++) {
-        for (var j = 0; j < 3; j++) {
-            //check the first empty cell
-            //that we encounter
-            if (isCellEmpty(i, j)) {
+    //check for difficulty
+    if (difficulty === EASY) {
+        index = computerEasy()
+    } else if (difficulty === NORMAL) {
+        index = computerNormal()
 
-                //check for winning move
-                //temporary add O
-                table[i][j] = O
-                current = O
-
-                //check if it is a winning
-                //move
-                if (check()) {
-
-                    //if it is. Get index
-                    x = i
-                    y = j
-                }
-
-                //temporarily add X
-                //and change current to X
-                table[i][j] = X
-                current = X
-
-                //if check
-                if (check()) {
-                    //get the index
-                    //it will be used to
-                    //block
-                    x = i
-                    y = j
-
-                }
-
-                //change back
-                table[i][j] = E
-                current = O
-            }
+        //There is no blocking moves
+        if (index === null) {
+            index = computerEasy()
         }
+    } else if (difficulty === HARD) {
+        index = computerHard()
+
+        if (index === null) {
+            index = computerNormal()
+        }
+
+        if (index === null) {
+            index = computerEasy()
+        }
+    } else {
+        alert(`Somethings wrong with the difficulty\nDifficulty: ${difficulty}`)
     }
-    //if there is no blocking opportunity
-    if (x === null && y === null) {
-        //random from range 0 to 4
-        x = Math.floor(Math.random() * 3)
-        y = Math.floor(Math.random() * 3)
+
+    //if index is not null
+    if (index !== null) {
+        x = index[0]
+        y = index[1]
     }
 
     var element = ""
@@ -383,3 +373,112 @@ function computerMoves() {
         return computerMoves()
     }
 }
+
+//to do... Add different computer difficulty.
+function computerEasy() {
+    var x = Math.floor(Math.random() * 3)
+    var y = Math.floor(Math.random() * 3)
+
+    return [x,
+        y]
+}
+
+//normal
+function computerNormal() {
+    //Todo implement a blocking mechanics
+
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            //only do the operation on
+            //empty cell
+            if (table[i][j] === E) {
+                //temporarily set X to the
+                //cell. Then check it if
+                //if it a winning move for
+                //X. If it is, then block
+                //it.
+                table[i][j] = X
+
+                //temporarily set current
+                //to X, cause that is how
+                //our check algorithm
+                //works
+                current = X
+
+                if (check()) {
+                    //change the table and
+                    //cell back
+                    table[i][j] = E
+                    current = O
+
+                    //return as index
+                    return [i,
+                        j]
+                }
+
+                //change the table and
+                //cell back after the check
+                table[i][j] = E
+                current = O
+            }
+        }
+    }
+
+    return null
+}
+
+//hard computer
+function computerHard() {
+    //check for winning move for the computer
+
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            //same algorithm as normal
+
+            if (table[i][j] === E) {
+                table[i][j] = O
+                current = O
+
+                if (check()) {
+                    table[i][j] = E
+                    current = O
+
+                    return [i,
+                        j]
+                }
+
+                table[i][j] = E
+                current = O
+            }
+        }
+    }
+
+    return null
+}
+
+//show a dialog where user select difficulty
+//level.
+function showDifficultyDialog() {
+    var dialog = document.getElementsByClassName("dialog")[1]
+
+    dialog.style.scale = "1"
+    dialog.style.visibility = "visible"
+}
+
+function closeDifficultyDialog() {
+    var dialog = document.getElementsByClassName("dialog")[1]
+
+    dialog.style.scale = "0"
+
+    dialog.addEventListener("transitioned", function() {
+        dialog.style.visibility = "hidden"
+    })
+}
+
+function setDifficulty(level) {
+    difficulty = level
+
+    closeDifficultyDialog()
+}
+
+showDifficultyDialog()
